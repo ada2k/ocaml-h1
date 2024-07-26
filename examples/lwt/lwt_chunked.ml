@@ -5,7 +5,7 @@ module Arg = Stdlib.Arg
 open H1_lwt_unix
 
 let request_handler (_ : Unix.sockaddr) reqd =
-  let body = H1.Reqd.respond_with_streaming reqd (H1.Response.create ~headers:(H1.Headers.of_list ["connection", "close"]) `OK) in
+  let body = H1.Reqd.respond_with_streaming reqd (H1.Response.create ~headers:(Httpun_types.Headers.of_list ["connection", "close"]) `OK) in
   let rec respond_loop i =
     H1.Body.Writer.write_string body (Printf.sprintf "Chunk %i\n" i);
     H1.Body.Writer.flush_with_reason body (function
