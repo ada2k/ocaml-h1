@@ -31,6 +31,8 @@
     POSSIBILITY OF SUCH DAMAGE.
   ----------------------------------------------------------------------------*)
 
+open Httpun_types
+
 module Reader = struct
   type t =
     { faraday                        : Faraday.t
@@ -76,7 +78,7 @@ module Reader = struct
       t.read_scheduled <- false;
       t.on_eof         <- default_on_eof;
       t.on_read        <- default_on_read;
-      let { IOVec.buffer; off; len } = iovec in
+      let { Httpun_types.IOVec.buffer; off; len } = iovec in
       Faraday.shift t.faraday len;
       on_read buffer ~off ~len;
       execute_read t
